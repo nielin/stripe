@@ -1,0 +1,15 @@
+{
+	"name": "Stripe",
+	"description": "CakePHP Stripe Plugin",
+
+	"author": "Jeremy Harris",
+	"authorEmail": "",
+	"authorUrl": "https://github.com/jeremyharris/stripe",
+
+	"dependencies": {
+		"plugins": [
+			"acl",
+			"extensions"
+		]
+	}
+}
