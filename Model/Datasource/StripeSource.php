@@ -56,7 +56,7 @@ class StripeSource extends DataSource {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 
-		if (empty($config['api_key'])) {
+		if (empty($config['api_key']) && !$this->getApiKey()) {
 			throw new CakeException('StripeSource: Missing api key');
 		}
 		
@@ -192,7 +192,7 @@ class StripeSource extends DataSource {
 		);
 		$this->request = Set::merge($this->request, $request);
 		$this->request['uri']['path'] = '/v1/' . trim($this->request['uri']['path'], '/');
-		$this->Http->configAuth('Basic', $this->config['api_key'], '');
+		$this->Http->configAuth('Basic', $this->getApiKey(), '');
 
 		try {
 			$response = $this->Http->request($this->request);
@@ -271,6 +271,15 @@ class StripeSource extends DataSource {
 		} else {
 			return null;
 		}
+	}
+
+/**
+ * Returns API key
+ *
+ * @return string
+ */
+	public function getApiKey() {
+		return (Configure::read('Stripe.mode') == 'production') ? Configure::read('Stripe.api-key-production') : Configure::read('Stripe.api-key-development');
 	}
 
 }
