@@ -196,9 +196,15 @@ class StripeSource extends DataSource {
 
 		try {
 			$response = $this->Http->request($this->request);
+			CakeLog::write('stripe', print_r($response, true));
 			switch ($this->Http->response['status']['code']) {
 				case '200':
-					return json_decode($response, true);
+					$jsonResponse = json_decode($response, true);
+					CakeLog::write('stripe', print_r($jsonResponse, true));
+					if(!empty($jsonResponse['data'])) {
+						return $jsonResponse['data'];
+					}
+					return false;
 				break;
 				case '402':
 					$error = json_decode($response, true);

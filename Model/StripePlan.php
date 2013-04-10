@@ -113,14 +113,4 @@ class StripePlan extends StripeAppModel {
 		)
 	);
 
-/**
- * No such thing as updating a plan in the Stripe API
- *
- * @return boolean True
- */
-	public function beforeSave() {
-		$this->id = null;
-		return true;
-	}
-
 }
